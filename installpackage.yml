@@ -1,0 +1,26 @@
+---
+- name: Install multiple packages
+  hosts: webserver
+  become: true
+  vars:
+   packages:
+   - git
+   - unzip
+   - wget
+   - net-tools
+   - php-fpm
+
+  tasks:
+   - name: Update apt package
+     apt:
+       name: "*"
+       state: latest
+       update_cache: true
+       force_apt_get: true
+
+   - name: Install Packages
+     apt:
+       name: "{{ packages }}"
+       state: latest
+       update_cache: yes
+
